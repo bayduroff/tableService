@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.List;
 import java.util.Scanner;
 
 @SpringBootApplication
@@ -21,68 +22,57 @@ public class XmlProcessorApplication implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("\n=== XML Processor with Spring ===");
-            System.out.println(xmlService.getTableNames());
-            System.out.println("DDL for currencies:");
-            System.out.println(xmlService.getTableDDL("currencies"));
-            System.out.println("\nDDL for categories:");
-            System.out.println(xmlService.getTableDDL("categories"));
-            System.out.println("\nDDL for offers:");
-            System.out.println(xmlService.getTableDDL("offers"));
-            while (true) {
-                /*System.out.println("\n=== XML Processor with Spring ===");
-                System.out.println("1. Show table names");
-                System.out.println("2. Show DDL for a table");
-                System.out.println("3. Update all tables");
-                System.out.println("4. Update specific table");
-                System.out.println("5. Show column names");
-                System.out.println("6. Check if column is ID");
-                System.out.println("7. Exit");
-                System.out.print("Choose: ");
+            System.out.println("=== XML Processor with Spring ===");
 
-                String choice = scanner.nextLine();
+            while (true) {
+                System.out.println("\nВыберите действие:");
+                System.out.println("1. Показать список таблиц (getTableNames)");
+                System.out.println("2. Показать DDL для таблицы (getTableDDL)");
+                System.out.println("3. Обновить все таблицы (updateAll)");
+                System.out.println("4. Обновить конкретную таблицу (updateTable)");
+                System.out.println("0. Выход");
+                System.out.print("Ваш выбор: ");
+
+                String choice = scanner.nextLine().trim();
+
                 try {
                     switch (choice) {
                         case "1":
-                            System.out.println("Tables: " + processor.getTableNames());
+                            List<String> tables = xmlService.getTableNames();
+                            System.out.println("Таблицы из XML: " + tables);
                             break;
+
                         case "2":
-                            System.out.print("Table name: ");
-                            String t = scanner.nextLine();
-                            System.out.println(processor.getTableDDL(t));
+                            System.out.print("Введите имя таблицы: ");
+                            String tableName = scanner.nextLine().trim();
+                            String ddl = xmlService.getTableDDL(tableName);
+                            System.out.println("DDL:\n" + ddl);
                             break;
+
                         case "3":
-                            processor.updateAll();
-                            System.out.println("All tables updated.");
+                            xmlService.updateAll();
+                            System.out.println("Все таблицы успешно обновлены.");
                             break;
+
                         case "4":
-                            System.out.print("Table name: ");
-                            String t2 = scanner.nextLine();
-                            processor.update(t2);
+                            System.out.print("Введите имя таблицы: ");
+                            String tName = scanner.nextLine().trim();
+                            xmlService.updateTable(tName);
+                            System.out.println("Таблица '" + tName + "' обновлена.");
                             break;
-                        case "5":
-                            System.out.print("Table name: ");
-                            String t3 = scanner.nextLine();
-                            System.out.println("Columns: " + processor.getColumnNames(t3));
-                            break;
-                        case "6":
-                            System.out.print("Table name: ");
-                            String t4 = scanner.nextLine();
-                            System.out.print("Column name: ");
-                            String col = scanner.nextLine();
-                            System.out.println("Is ID: " + processor.isColumnId(t4, col));
-                            break;
-                        case "7":
-                            System.out.println("Bye!");
+
+                        case "0":
+                            System.out.println("Программа завершена.");
                             return;
+
                         default:
-                            System.out.println("Invalid option.");
+                            System.out.println("Неверный ввод. Попробуйте снова.");
                     }
                 } catch (Exception e) {
-                    System.err.println("Error: " + e.getMessage());
-                }*/
+                    System.err.println("Ошибка: " + e.getMessage());
+                }
             }
         }
     }
