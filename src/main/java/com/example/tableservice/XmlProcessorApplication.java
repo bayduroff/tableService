@@ -26,6 +26,28 @@ public class XmlProcessorApplication implements CommandLineRunner {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("=== XML Processor with Spring ===");
 
+            //Раскомментировать для демонстрационной версии (без интерактива)
+            /*
+            // 1. Показать список таблиц
+            List<String> tableNames = xmlService.getTableNames();
+            System.out.println("Tables from XML: " + tableNames);
+
+            // 2. Показать DDL для каждой таблицы
+            for (String tableName : tableNames) {
+                System.out.println("\nDDL for " + tableName + ":");
+                System.out.println(xmlService.getTableDDL(tableName));
+            }
+
+            // 3. Обновить все таблицы
+            System.out.println("\nUpdating all tables...");
+            xmlService.updateAll();
+            System.out.println("All tables updated successfully.");
+
+            // 4. Завершение
+            System.out.println("\nApplication finished. Exiting.");
+            */
+
+            //Закомментировать для демонстрационной версии (без интерактива)
             while (true) {
                 System.out.println("\nВыберите действие:");
                 System.out.println("1. Показать список таблиц (getTableNames)");
